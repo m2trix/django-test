@@ -1,0 +1,77 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AjaxTest</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'jquery.min-1.12.4.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+    <div style="margin:1em">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="#">TEST-ENV</a></li>
+            <li role="presentation"><a href="#">PRE-ENV</a></li>
+            <li role="presentation"><a href="#">GRAY-ENV</a></li>
+            <li role="presentation"><a href="#">MP-ENV</a></li>
+        </ul>
+
+        <div style="margin-top:1em">
+            <strong>
+                测试环境<br>
+                IP: 192.168.1.67<br>
+                Port: 80<br>
+            </strong>
+        </div>
+        
+
+        <p id="status_code"> 当前返回值：{{ code }}</p>
+        
+        <table class="table table-hover">
+            <tr>
+                <th>接口功能</th>
+                <th>接口名称</th>
+                <th>接口参数</th>
+                <th>测试结果</th>
+                <th>测试状态</th>
+            </tr>
+            <tr>
+                <td>row 1, cell 1</td>
+                <td>row 1, cell 2</td>
+                <td>row 1, cell 3</td>
+                <td>row 1, cell 4</td>
+                <td><input type="button" onclick="AjaxSubmit();" value="提交"></td>
+            </tr>
+            <tr>
+                <td>row 2, cell 1</td>
+                <td>row 2, cell 2</td>
+                <td>row 2, cell 3</td>
+                <td>row 2, cell 4</td>
+                <td><input type="button" onclick="AjaxSubmit();" value="提交"></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function AjaxSubmit() {
+            var host = '127.0.0.1';
+            var port = '8000';
+            $.ajax({
+                url:"{% url 'home' %}",
+                type:'get',
+                data: {host:host, port:port},
+                success: function(arg) {
+                    // alert(arg);
+                    // alert(typeof arg);
+                    // alert(arg.code);
+                    $('#status_code').html(arg.code);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
