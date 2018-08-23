@@ -1,17 +1,17 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AjaxTest</title>
+    <script type="text/javascript" src="{% static 'jquery.min-1.12.4.js' %}"></script>
 </head>
 <body>
     <input type="button" onclick="AjaxSubmit();" value="提交">
-    <p>当前返回值：{{ code }}</p>
-    <script type="text/javascript" src="{% static 'jquery.min-1.12.4.js' %}"></script>
+    <p id="status_code"> 当前返回值：{{ code }}</p>
     <script>
         function AjaxSubmit() {
             var host = '127.0.0.1';
@@ -21,13 +21,10 @@
                 type:'get',
                 data: {host:host, port:port},
                 success: function(arg) {
-                    var callback_dic = $.parseJSON(arg);
-                    
-                    if (callback_dic.status) { 
-                        alert('成功');
-                    } else {
-                        alert(callback_dic.error); //把错误的信息从后台提出展示出来
-                    }
+                    // alert(arg);
+                    // alert(typeof arg);
+                    // alert(arg.code);
+                    $('#status_code').html(arg.code);
                 }
             });
         }
