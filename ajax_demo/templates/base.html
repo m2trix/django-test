@@ -39,31 +39,27 @@
                 <th>测试结果</th>
                 <th>测试状态</th>
             </tr>
-            <tr>
-                <td>row 1, cell 1</td>
-                <td>row 1, cell 2</td>
-                <td>row 1, cell 3</td>
-                <td>row 1, cell 4</td>
-                <td><input type="button" onclick="AjaxSubmit();" value="提交"></td>
-            </tr>
-            <tr>
-                <td>row 2, cell 1</td>
-                <td>row 2, cell 2</td>
-                <td>row 2, cell 3</td>
-                <td>row 2, cell 4</td>
-                <td><input type="button" onclick="AjaxSubmit();" value="提交"></td>
-            </tr>
+
+            {% for api in api_list  %}
+                <tr>
+                    <td>{{ api.url_name }}</td>
+                    <td>{{ api.url_path }}</td>
+                    <td>{{ api.url_params }}</td>
+                    <td>Cell 4</td>
+                    <td><input type="button" onclick="AjaxSubmit('{{ api.pk }}');" value="提交"></td>
+                </tr>
+            {% empty %}
+                <p>暂无数据，请添加</p>
+            {% endfor %}
         </table>
     </div>
 
     <script>
-        function AjaxSubmit() {
-            var host = '127.0.0.1';
-            var port = '8000';
+        function AjaxSubmit(pk) {
             $.ajax({
                 url:"{% url 'home' %}",
                 type:'get',
-                data: {host:host, port:port},
+                data: {body_pk:pk},
                 success: function(arg) {
                     // alert(arg);
                     // alert(typeof arg);
