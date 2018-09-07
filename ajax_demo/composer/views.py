@@ -20,9 +20,9 @@ def ajax_view(request):
             full_url = 'http://httpbin.org' + url_body.url_path + "?" + url_body.url_params
         else:
             full_url = 'http://httpbin.org' + url_body.url_path
-        print(full_url)
+        print('full_url: ' + full_url)
 
-        r = requests.get('full_url: ' + full_url)
+        r = requests.get(full_url)
         context['code'] = r.status_code
         return JsonResponse(context)
 
