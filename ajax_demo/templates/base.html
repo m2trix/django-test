@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AjaxTest</title>
+    <title>PaperBoy</title>
     <link rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'jquery.min-1.12.4.js' %}"></script>
     <script type="text/javascript" src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
@@ -14,10 +14,11 @@
 <body>
     <div style="margin:1em">
         <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="#">TEST-ENV</a></li>
+            <li role="presentation"><a href="#">TEST-ENV</a></li>
             <li role="presentation"><a href="#">PRE-ENV</a></li>
             <li role="presentation"><a href="#">GRAY-ENV</a></li>
             <li role="presentation"><a href="#">MP-ENV</a></li>
+            <li role="presentation" class="active"><a href="#">DebugTab</a></li>
         </ul>
 
         <div style="margin-top:1em">
@@ -28,15 +29,13 @@
             </strong>
         </div>
         
-
-        <p id="status_code"> 当前返回值：{{ code }}</p>
-        
         <table class="table table-hover">
             <tr>
                 <th>接口功能</th>
                 <th>接口名称</th>
                 <th>接口参数</th>
-                <th>测试结果</th>
+                <th>响应码</th>
+                <th>请求结果</th>
                 <th>测试状态</th>
             </tr>
 
@@ -45,7 +44,8 @@
                     <td>{{ api.url_name }}</td>
                     <td>{{ api.url_path }}</td>
                     <td>{{ api.url_params }}</td>
-                    <td>Cell 4</td>
+                    <td id="td_id_code_{{ api.pk }}">N/A</td>
+                    <td id="td_id_json_{{ api.pk }}">N/A</td>
                     <td><input type="button" onclick="AjaxSubmit('{{ api.pk }}');" value="提交"></td>
                 </tr>
             {% empty %}
@@ -65,6 +65,8 @@
                     // alert(typeof arg);
                     // alert(arg.code);
                     $('#status_code').html(arg.code);
+                    $('#td_id_code_'+arg.item_pk).html(arg.code);
+                    $('#td_id_json_'+arg.item_pk).html(arg.rsp_json);
                 }
             });
         }

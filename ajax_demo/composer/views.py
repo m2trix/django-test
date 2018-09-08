@@ -24,6 +24,8 @@ def ajax_view(request):
 
         r = requests.get(full_url)
         context['code'] = r.status_code
+        context['item_pk'] = body_pk
+        context['rsp_json'] = json.dumps(r.json())
         return JsonResponse(context)
 
     context['code'] = 0
